@@ -21,10 +21,13 @@ class player:
 ## Original Attack Method:
     def attack(self, name):
         # Get the target from the given name of the enemy
-        if enemies.get(name) == None:
-            print('That enemy does not exist! \n')
-            return
-        target = enemies.get(name)
+        # if players.get(name) != None:
+        #     print('You shouldnt attack your mates!')
+        #     return
+        # if enemies.get(name) == None:
+        #     print('That enemy does not exist! \n')
+        #     return
+        target = players.get(name)
         if self.is_knocked_out == True:
             print('You are knocked out and cant attack!')
             return
