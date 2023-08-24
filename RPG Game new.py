@@ -90,6 +90,27 @@ class player:
             target.health = 1
         print('{name} has been revived!'.format(name = self.name))
 
+    def lose_health(self, amount):
+        self.health -= amount
+        if self.health <= 0:
+            self.health = 0
+            self.knock_out()
+        else:
+            print('{name} has lost {amount} health and has now {health} health.'.format(name = self.name, amount = amount, health = self.health))
+    
+    def use_potion(self):
+    print('Available potions: ' + str(self.potions.keys()))
+    potion = input('Which potion do you want to use? \n')
+    while potion not in self.potions.keys():
+        potion = input('Sorry, that potion is not available. \n')
+    name = input('Who do you want to use that potion on? \n')
+    if players.get(name) == None:
+        print('That player does not exist. \n')
+        return
+    if enemies.get(name) != None:
+        print('That enemy does not exist! \n')
+        return
+    target = players.get(name)
 
 # Databases:
 players = {}
