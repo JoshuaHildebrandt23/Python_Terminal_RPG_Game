@@ -18,18 +18,18 @@ class player:
     def __repr__(self):
         return ('{name} is a level {level} {type}.'.format(name = self.name, level = self.level, type = self.type))
 
-## Original Attack Method:
+# Original Attack Method:
     def attack(self, name):
         # Get the target from the given name of the enemy
-        # if players.get(name) != None:
-        #     print('You shouldnt attack your mates!')
-        #     return
-        # if enemies.get(name) == None:
-        #     print('That enemy does not exist! \n')
-        #     return
+        if players.get(name) != None:
+            print('You shouldnt attack your mates! \n')
+            return
+        if enemies.get(name) == None:
+            print('That enemy does not exist! \n')
+            return
         target = players.get(name)
         if self.is_knocked_out == True:
-            print('You are knocked out and cant attack!')
+            print('You are knocked out and cant attack! \n')
             return
         if self.type == 'Paladin':
             self.attack_bonus = 0
@@ -48,6 +48,48 @@ class player:
         else:
             damage_dealt = 5
         target.lose_health(damage_dealt - target.defend())
+    
+    def defend(self):
+        if self.is_knocked_out == True:
+            print('You are knocked out and cant defend yourself! \n')
+            return
+        if self.type == 'Paladin':
+            self.defence_bonus = 3
+        elif self.type == 'Knight':
+            self.defence_bonus = 2
+        elif self.type == 'Mage':
+            self.defence_bonus = 0
+        defence_dice = random.randint(0, 20)
+        defence_dice_bonus = defence_dice + self.defence_bonus
+        print('The dices rolled a ' + str(defence_dice) + ' for defence!')
+        print('Adding your bonus, you got a '+ str(defence_dice_bonus) + ' for defence!')
+        if defence_dice_bonus <= 5:
+            return 0
+        elif defence_dice_bonus <= 15:
+            return 1
+        else:
+            return 2
+        
+    def knock_out(self):
+        self.is_knocked_out = True
+        if self.health != 0:
+            self.health = 0
+        print('{name} has been knocked out and needs to be revived!'.format(name = self.name))
+    
+    def revive(self, name):
+        if players.get(name) == None:
+            print('That player does not exist. \n')
+            return
+        if enemies.get(name) != None:
+            print('That enemy does not exist! \n')
+            return
+        target = players.get(name)
+        if target.is_knocked_out == True:
+            target.is_knocked_out = False
+        if target.health != 1:
+            target.health = 1
+        print('{name} has been revived!'.format(name = self.name))
+
 
 # Databases:
 players = {}
