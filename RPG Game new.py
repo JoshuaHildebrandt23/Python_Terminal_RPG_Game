@@ -150,6 +150,33 @@ class player:
             print('{name} used a health potion on {target} and has {num} remaining health potions!'.format(
                 name = self.name, target = target, num = self.potions['health potion']))
 
+# Class for enemies:
+class enemy:
+    def __init__(self, name: str,level: int, type: type):
+        self.name = name
+        self.level = 1
+        self.health = self.level * 5
+        self.max_health = self.level * 5
+        self.is_knocked_out = False
+        self.is_active = False
+        self.type = type
+
+    # Class tells their name, level and type
+    def __repr__(self):
+        print('{name} is a level {level} {type}.'.format(name = self.name, level = self.level, type = self.type))
+    
+    # Create attack move
+    def attack(self):
+        #Choose the player that the enemy will attack
+        for key in players.keys():
+            if key.is_knocked_out == False and key.type == 'Paladin':
+                target = players[key]
+            else:
+                random_target_num = random.randint(1, 2)
+                if random_target_num == 1:
+                    target = player_one
+                else:
+                    target = player_two
 
 
 # Databases:
@@ -165,6 +192,7 @@ while player_one_type != 'Knight' and player_one_type != 'Paladin' and player_on
 # Creating the object of player one
 players[player_one_name] = player(player_one_name, player_one_type)
 print(players[player_one_name])
+player_one = players.get(player_one_name)
 print('...')
 
 # Ask player two for their name:
@@ -176,8 +204,10 @@ while player_two_type != 'Knight' and player_two_type != 'Paladin' and player_tw
 # Creating the object of player two
 players[player_two_name] = player(player_two_name, player_two_type)
 print(players[player_two_name])
+player_two = players.get(player_two_name)
 print('...')
 
 players[player_one_name].attack(player_two_name)
 
+print(players)
 # Check if you can attack a knocked out player/enemy
