@@ -200,26 +200,40 @@ class enemy:
             damage_dealt = 5
         target_for_enemy.lose_health(damage_dealt - target_for_enemy.defend())
 
-def defend(self):
-    if self.is_knocked_out == True:
-        print('You are knocked out and cant defend yourself!')
-        return
-    if self.type == 'Paladin':
-        self.defence_bonus = 2
-    elif self.type == 'Knight':
-        self.defence_bonus = 1
-    elif self.type == 'Mage':
-        self.defence_bonus = 0
-    defence_dice = random.randint(0, 20)
-    defence_dice_bonus = defence_dice + self.defence_bonus
-    print('The dices rolled a ' + str(defence_dice) + ' for defence!')
-    print('Adding their bonus, they got a '+ str(defence_dice_bonus) + ' for defence!')
-    if defence_dice_bonus <= 5:
-        return 0
-    elif defence_dice_bonus <= 15:
-        return 1
-    else:
-        return 2
+    def defend(self):
+        if self.is_knocked_out == True:
+            print('You are knocked out and cant defend yourself!')
+            return
+        if self.type == 'Paladin':
+            self.defence_bonus = 2
+        elif self.type == 'Knight':
+            self.defence_bonus = 1
+        elif self.type == 'Mage':
+            self.defence_bonus = 0
+        defence_dice = random.randint(0, 20)
+        defence_dice_bonus = defence_dice + self.defence_bonus
+        print('The dices rolled a ' + str(defence_dice) + ' for defence!')
+        print('Adding their bonus, they got a '+ str(defence_dice_bonus) + ' for defence!')
+        if defence_dice_bonus <= 5:
+            return 0
+        elif defence_dice_bonus <= 15:
+            return 1
+        else:
+            return 2
+
+    def knock_out(self):
+        self.is_knocked_out = True
+        if self.health != 0:
+            self.health = 0
+            print('{name} has been knocked out and can not fight anymore!'.format(name = self.name))
+
+    def lose_health(self, amount):
+        self.health -= amount
+        if self.health <= 0:
+            self.health = 0
+            self.knock_out()
+        else:
+            print('{name} has lost {amount} health and has now {health} health.'.format(name = self.name, amount = amount, health = self.health))
 
 # Databases:
 players = {}
