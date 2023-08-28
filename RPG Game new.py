@@ -104,6 +104,9 @@ class player:
         # Un-Knock-Out the target
         if target.is_knocked_out == True:
             target.is_knocked_out = False
+        else:
+            print('You cant revive a living player!')
+            return
         # Make sure their health is one
         if target.health != 1:
             target.health = 1
@@ -163,7 +166,7 @@ class enemy:
 
     # Class tells their name, level and type
     def __repr__(self):
-        print('{name} is a level {level} {type}.'.format(name = self.name, level = self.level, type = self.type))
+        return('{name} is a level {level} {type}.'.format(name = self.name, level = self.level, type = self.type))
     
     # Create attack move
     def attack(self):
@@ -267,8 +270,59 @@ print(players[player_two_name])
 player_two = players.get(player_two_name)
 print('...')
 
-players[player_one_name].attack(player_two_name)
-enemies['Viktor'].attack()
+def check_end():
+    enemies_knocked_out = 0
+    for enemy in enemies.keys():
+        if enemies[enemy].is_knocked_out == True:
+            enemies_knocked_out += 1
+    if enemies_knocked_out == 2:
+        input('You won!\nPress a key to continue')
 
+    else:
+        return False
+        
+        
 
-# Check if you can attack a knocked out player/enemy
+# The game begins!
+print('Hi there! You spot two enemies: \n')
+print(enemies['Viktor'])
+print(enemies['Ivan'])
+while True:
+    player_one_action = input(str(player_one_name) + ' has to choose their action out of those three: \attack, revive or use_potion \n')
+    while player_one_action != 'attack' and player_one_action != 'revive' and  player_one_action != 'use_potion':
+        player_one_action = input('That action is not an option. Did you make a typo? \n')
+    if player_one_action == 'attack':
+        name = input('Who do you want to attack?\n')
+        players[player_one_name].attack(name)
+    elif player_one_action == 'revive':
+        name = input('Who do you want to revive?\n')
+        players[player_one_name].revive(name)
+    elif player_one_action == 'use_potion' or player_one_action == 'use potion':
+        players[player_one_name].use_potion()
+    
+    enemies_knocked_out = 0
+    for enemy in enemies.keys():
+        if enemies[enemy].is_knocked_out == True:
+            enemies_knocked_out += 1
+    if enemies_knocked_out == 2:
+        input('You won!\nPress a key to continue')
+    
+    player_two_action = input(str(player_two_name) + ' has to choose their action out of those three: \attack, revive or use_potion \n')
+    while player_two_action != 'attack' and player_two_action != 'revive' and  player_two_action != 'use_potion':
+        player_two_action = input('That action is not an option. Did you make a typo? \n')
+    if player_two_action == 'attack':
+        name = input('Who do you want to attack?\n')
+        players[player_two_name].attack(name)
+    elif player_two_action == 'revive':
+        name = input('Who do you want to revive?\n')
+        players[player_two_name].revive(name)
+    elif player_two_action == 'use_potion' or player_two_action == 'use potion':
+        players[player_two_name].use_potion()
+
+    enemies_knocked_out = 0
+    for enemy in enemies.keys():
+        if enemies[enemy].is_knocked_out == True:
+            enemies_knocked_out += 1
+    if enemies_knocked_out == 2:
+        input('You won!\nPress a key to continue')
+
