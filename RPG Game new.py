@@ -167,21 +167,46 @@ class enemy:
     
     # Create attack move
     def attack(self):
-        #Choose the player that the enemy will attack
+        # Choose the player that the enemy will attack
         for key in players.keys():
-            if key.is_knocked_out == False and key.type == 'Paladin':
-                target = players[key]
-            else:
-                random_target_num = random.randint(1, 2)
-                if random_target_num == 1:
-                    target = player_one
-                else:
-                    target = player_two
+            if players[key].type == 'Paladin':
+                target_for_enemy = players[key]
+        if target_for_enemy == None:
+            random_target_num = random.randint(1, 2)
+            if random_target_num == 1:
+                target_for_enemy = player_one
+            else:                    
+                target_for_enemy = player_two
+        # Check if the enemy is knocked out
+        if self.is_knocked_out == True:
+            print('You are knocked out and cant attack!')
+            return
+        # Calculate the damage dealt 
+        if self.type == 'Paladin':
+            self.attack_bonus = 0
+        elif self.type == 'Knight':
+            self.attack_bonus = 1
+        elif self.type == 'Mage':
+            self.attack_bonus = 2
+        attack_dice = random.randint(0, 18)
+        attack_dice_bonus = attack_dice + self.attack_bonus
+        print('The dices rolled a ' + str(attack_dice) + ' for attack !')
+        print('Adding their bonus, they got a '+ str(attack_dice_bonus) + ' for attack!')
+        if attack_dice_bonus <= 5:
+            damage_dealt = 0
+        elif attack_dice_bonus <= 15:
+            damage_dealt = 3
+        else:
+            damage_dealt = 5
+        target_for_enemy.lose_health(damage_dealt - target_for_enemy.defend())
+
 
 
 # Databases:
 players = {}
 enemies = {}
+
+enemies['Viktor'] =  enemy('Viktor', 1, 'Knight')
 
 # Ask player one for their name:
 player_one_name = input('What is the name of the first player? \n')
@@ -208,6 +233,7 @@ player_two = players.get(player_two_name)
 print('...')
 
 players[player_one_name].attack(player_two_name)
+enemies['Viktor'].attack()
 
-print(players)
+
 # Check if you can attack a knocked out player/enemy
