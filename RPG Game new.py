@@ -144,6 +144,11 @@ class player:
             print('That enemy does not exist! \n')
             return
         target = players.get(name)
+        if potion == 'health potion' and self.potions['health potion'] > 0:
+            target.gain_health(3)
+            self.potions['health potion'] -= 1
+            print('{name} used a health potion on {target} and has {num} remaining health potions!'.format(
+                name = self.name, target = target, num = self.potions['health potion']))
 
 
 
