@@ -200,13 +200,34 @@ class enemy:
             damage_dealt = 5
         target_for_enemy.lose_health(damage_dealt - target_for_enemy.defend())
 
-
+def defend(self):
+    if self.is_knocked_out == True:
+        print('You are knocked out and cant defend yourself!')
+        return
+    if self.type == 'Paladin':
+        self.defence_bonus = 2
+    elif self.type == 'Knight':
+        self.defence_bonus = 1
+    elif self.type == 'Mage':
+        self.defence_bonus = 0
+    defence_dice = random.randint(0, 20)
+    defence_dice_bonus = defence_dice + self.defence_bonus
+    print('The dices rolled a ' + str(defence_dice) + ' for defence!')
+    print('Adding their bonus, they got a '+ str(defence_dice_bonus) + ' for defence!')
+    if defence_dice_bonus <= 5:
+        return 0
+    elif defence_dice_bonus <= 15:
+        return 1
+    else:
+        return 2
 
 # Databases:
 players = {}
 enemies = {}
 
-enemies['Viktor'] =  enemy('Viktor', 1, 'Knight')
+# Create two enemies
+enemies['Viktor'] = enemy('Viktor', 1, 'Knight')
+enemies['Ivan'] = enemy('Ivan', 1, 'Knight')
 
 # Ask player one for their name:
 player_one_name = input('What is the name of the first player? \n')
