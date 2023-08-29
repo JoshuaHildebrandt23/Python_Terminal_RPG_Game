@@ -288,7 +288,7 @@ print('Hi there! You spot two enemies: \n')
 print(enemies['Viktor'])
 print(enemies['Ivan'])
 while True:
-    player_one_action = input(str(player_one_name) + ' has to choose their action out of those three: \attack, revive or use_potion \n')
+    player_one_action = input(str(player_one_name) + ' has to choose their action out of those three: \n attack, revive or use_potion \n')
     while player_one_action != 'attack' and player_one_action != 'revive' and  player_one_action != 'use_potion':
         player_one_action = input('That action is not an option. Did you make a typo? \n')
     if player_one_action == 'attack':
@@ -307,7 +307,7 @@ while True:
     if enemies_knocked_out == 2:
         input('You won!\nPress a key to continue')
     
-    player_two_action = input(str(player_two_name) + ' has to choose their action out of those three: \attack, revive or use_potion \n')
+    player_two_action = input(str(player_two_name) + ' has to choose their action out of those three: \n attack, revive or use_potion \n')
     while player_two_action != 'attack' and player_two_action != 'revive' and  player_two_action != 'use_potion':
         player_two_action = input('That action is not an option. Did you make a typo? \n')
     if player_two_action == 'attack':
